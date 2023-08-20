@@ -1,18 +1,19 @@
-public class Solution {
-    public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        if (k > n || k < 0) {
-            return result;
-        }
+class Solution {
+
+    private void solve(int ind, int n, int k, List<Integer> ds, List<List<Integer>> ans) {
         if (k == 0) {
-            result.add(new ArrayList<Integer>());
-            return result;
+            ans.add(new ArrayList<>(ds));
+            return;
         }
-        result = combine(n - 1, k - 1);
-        for (List<Integer> list : result) {
-            list.add(n);
+        for (int i = ind; i <= n - k + 1; i++) {
+            ds.add(i);
+            solve(i + 1, n, k - 1, ds, ans);
+            ds.remove(ds.size() - 1);
         }
-        result.addAll(combine(n - 1, k));
-        return result;
+    }
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> ans = new ArrayList<>();
+        solve(1, n, k, new ArrayList<Integer>(), ans);
+        return ans;
     }
 }
