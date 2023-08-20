@@ -1,29 +1,31 @@
 public class Solution {
     public static int majorityElement(int []v) {
-        // Write your code here
-        int cnt=0,el=Integer.MIN_VALUE;
-        for(int i=0;i<v.length;i++)
-        {
-            if(cnt==0)
-            {
-                cnt=1;
-                el=v[i];
+        int element=-1;
+        int count=0;
+        for(int i=0;i<v.length;i++){
+            if(count == 0){
+                element=v[i];
+                count++;
             }
-            else
-            if(v[i]==el)
-            cnt++;
-            else
-            cnt--;
+            else if(v[i]==element){
+                count++;
+            }
+            else if(v[i]!=element){
+                count--;
+            }
+
         }
-        int cnt1=0;
-        for(int i=0;i<v.length;i++)
-        {
-            if(v[i]==el)
-            cnt1++;
+        if(count>0){
+            int count1=0;
+            for(int i: v){
+                if(i==element){
+                    count++;
+                }
+            }
+            if(count>Math.floor(v.length/2)){
+             return element;   
+            }
         }
-        if(cnt1>v.length/2)
-        return el;
-        else
         return -1;
     }
 }
