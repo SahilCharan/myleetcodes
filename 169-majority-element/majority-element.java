@@ -1,31 +1,20 @@
-public class Solution {
-    public static int majorityElement(int []v) {
-        int element=-1;
-        int count=0;
-        for(int i=0;i<v.length;i++){
-            if(count == 0){
-                element=v[i];
-                count++;
+class Solution {
+    public int majorityElement(int[] nums) {
+        int count = 0;
+        int candidate = 0;
+        
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
             }
-            else if(v[i]==element){
+            
+            if (num == candidate) {
                 count++;
-            }
-            else if(v[i]!=element){
+            } else {
                 count--;
             }
-
         }
-        if(count>0){
-            int count1=0;
-            for(int i: v){
-                if(i==element){
-                    count++;
-                }
-            }
-            if(count>Math.floor(v.length/2)){
-             return element;   
-            }
-        }
-        return -1;
+        
+        return candidate;
     }
 }
