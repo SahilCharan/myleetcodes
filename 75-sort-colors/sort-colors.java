@@ -3,13 +3,7 @@ class Solution {
         int low=0;
         int high=nums.length-1;
         int i=0;
-        if(nums.length==2)
-        {
-            if(nums[0]>nums[1])
-            swap(nums,0,1);
-        }
-        else
-        {
+        
         while(i<=high)
         {
             if(nums[i]==0){
@@ -25,7 +19,7 @@ class Solution {
                     high--;
                 }
             }
-        }
+        
     }
     public static void swap(int arr[],int i, int j)
     {
