@@ -10,7 +10,7 @@ class Solution {
         int low = 0, high = nums.length - 1, first = -1;
 
         while (low <= high) {
-            int mid = low + (high - low) / 2;
+            int mid = low + ((high - low)>>2);
 
             if (nums[mid] == target) {
                 first = mid;
@@ -29,7 +29,7 @@ class Solution {
         int low = 0, high = nums.length - 1, last = -1;
 
         while (low <= high) {
-            int mid = low + (high - low) / 2;
+            int mid = low + ((high - low)>>2);
 
             if (nums[mid] == target) {
                 last = mid;
