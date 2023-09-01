@@ -9,12 +9,12 @@ class Solution {
         return result;
 
     }
-    public int onecount(int n)
+    public int onecount(int num)
     {
         int count = 0;
-        while (n > 0) {
-            count += n & 1; // Add the least significant bit to the count
-            n >>= 1; // Right shift to check the next bit
+        while (num > 0) {
+            num &= (num - 1);
+            count++;
         }
         return count;
     }
