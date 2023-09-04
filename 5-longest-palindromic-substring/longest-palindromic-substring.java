@@ -1,40 +1,27 @@
 class Solution {
+    int maxLen = 0;
+    int lo = 0;
     public String longestPalindrome(String s) {
-    int n = s.length();
-    boolean[][] dp = new boolean[n][n];
-    int start = 0;
-    int maxLength = 1;
-
-    // All substrings of length 1 are palindromes
-    for (int i = 0; i < n; i++) {
-        dp[i][i] = true;
+        char[] input = s.toCharArray();
+        if(s.length() < 2) {
+            return s;
+        }
+        
+        for(int i = 0; i<input.length; i++) {
+            expandPalindrome(input, i, i);
+            expandPalindrome(input, i, i+1);
+        }
+        return s.substring(lo, lo+maxLen);
     }
-
-    // Check for palindromes of length 2
-    for (int i = 0; i < n - 1; i++) {
-        if (s.charAt(i) == s.charAt(i + 1)) {
-            dp[i][i + 1] = true;
-            start = i;
-            maxLength = 2;
+    
+    public void expandPalindrome(char[] s, int j, int k) {
+        while(j >= 0 && k < s.length && s[j] == s[k]) {
+            j--;
+            k++;
+        }
+        if(maxLen < k - j - 1) {
+            maxLen = k - j - 1;
+            lo = j+1;
         }
     }
-
-    // Check for palindromes of length 3 or more
-    for (int len = 3; len <= n; len++) {
-        for (int i = 0; i < n - len + 1; i++) {
-            int j = i + len - 1;
-
-            if (s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1]) {
-                dp[i][j] = true;
-
-                if (len > maxLength) {
-                    start = i;
-                    maxLength = len;
-                }
-            }
-        }
-    }
-
-    return s.substring(start, start + maxLength);
-}
 }
