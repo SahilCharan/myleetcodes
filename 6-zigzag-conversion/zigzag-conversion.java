@@ -1,32 +1,35 @@
-class Solution {
-    public String convert(String s, int numRows) {
-        if (numRows == 1) {
-            return s;
-        }
-        
-        StringBuilder answer = new StringBuilder();
-        int n = s.length();
-        int diff = 2 * (numRows - 1);
-        int diagonalDiff = diff;
-        int secondIndex;
-        int index;
-        for (int i = 0; i < numRows; i++) {
-            index = i;
+public class Solution{
+public String convert(String s, int numRows) {
+    if (numRows == 1) {
+        return s;
+    }
 
-            while (index < n) {
-                answer.append(s.charAt(index));
-                if (i != 0 && i != numRows - 1) {
-                    diagonalDiff = diff-2*i;
-                    secondIndex = index + diagonalDiff;
-                    
-                    if (secondIndex < n) {
-                        answer.append(s.charAt(secondIndex));
-                    }
-                }
-                index += diff;
+    char[][] grid = new char[numRows][s.length()];
+
+    int row = 0;
+    int col = 0;
+    boolean goingDown = false;
+
+    for (char c : s.toCharArray()) {
+        grid[row][col] = c;
+
+        if (row == 0 || row == numRows - 1) {
+            goingDown = !goingDown;
+        }
+
+        row += goingDown ? 1 : -1;
+        col++;
+    }
+
+    StringBuilder answer = new StringBuilder();
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j < s.length(); j++) {
+            if (grid[i][j] != '\0') {
+                answer.append(grid[i][j]);
             }
         }
-        
-        return answer.toString();
     }
+
+    return answer.toString();
+}
 }
