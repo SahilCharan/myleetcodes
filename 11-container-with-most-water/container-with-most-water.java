@@ -1,22 +1,24 @@
 class Solution {
     public int maxArea(int[] height) {
-        int max = 0;
-        int left = 0;
+         int left = 0;
         int right = height.length-1;
-        
-        while(left<right){
-            int width = right-left; 
-            int amount = 0;
-            if (height[left]<height[right]){
-                amount = width * height[left];
-                left++;
-            }else{
-                amount = width * height[right];
-                right--;
-            }
-            max = amount>max?amount:max;
+        int maxW= 0;
+        while(left<right)
+        {
+            //calculate water area
+            int hi = Math.min(height[left], height[right]);
+            //calculate height
+            int wi = right -left;
+            int currentWater= hi*wi;
+            maxW = Math.max(maxW,currentWater);
+
+            //update pointers
+            if(height[left]<height[right])
+            left++;
+            else
+            right--;
+
         }
-        
-        return max;
+        return maxW;
     }
 }
