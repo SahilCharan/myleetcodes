@@ -1,14 +1,24 @@
 class Solution {
-    public int maxDistance(int[] colors) {
-        int max = -1;
-        for (int i = 0; i < colors.length; i++) {
-            for (int j = colors.length - 1; j > i; j--) {
-                if (colors[i] != colors[j]) {
-                    max = Math.max(max, Math.abs(j - i));
-                    break; // Break to avoid unnecessary iterations
-                }
+    public int maxDistance(int[] arr) {
+        // HashMap<Integer>map=new HashMap<>();
+        int n=arr.length;
+    	int ans1=0;
+    	int ans2=0;
+        for(int i=n-1;i>=0;i--){
+            if(arr[i]!=arr[0]){
+                ans1=i;
+                break;
             }
         }
-        return max;
+
+        for(int i=0;i<n;i++){
+            if(arr[i]!=arr[n-1]){
+                ans2=(n-i)-1;
+                break;
+            }
+        }
+
+
+        return Math.max(ans1,ans2);
     }
 }
