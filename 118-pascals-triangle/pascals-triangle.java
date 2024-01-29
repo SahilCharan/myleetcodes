@@ -1,29 +1,26 @@
 class Solution {
+    public List<Integer> generateRows(int row)
+    {
+        long ans =1;
+        List<Integer> ansRow = new ArrayList<>();
+        ansRow.add(1);
+        for(int col = 1;col<row;col++)
+        {
+            ans = ans * (row-col);
+            ans = ans/(col);
+            ansRow.add((int)ans);
+        }
+        return ansRow;
+
+    }
     public List<List<Integer>> generate(int numRows) {
-        List<List<Integer>> result = new ArrayList<>();
-
-        if (numRows <= 0) {
-            return result;
+        List<List<Integer>> ans = new ArrayList<>();
+        for(int row =1; row<=numRows;row++)
+        {
+            ans.add(generateRows(row));
         }
+        return ans;
+        
 
-        List<Integer> firstRow = new ArrayList<>();
-        firstRow.add(1);
-        result.add(firstRow);
-
-        for (int i = 1; i < numRows; i++) {
-            List<Integer> prevRow = result.get(i - 1);
-            List<Integer> currentRow = new ArrayList<>();
-
-            currentRow.add(1);
-
-            for (int j = 1; j < i; j++) {
-                currentRow.add(prevRow.get(j - 1) + prevRow.get(j));
-            }
-
-            currentRow.add(1);
-            result.add(currentRow);
-        }
-
-        return result;
     }
 }
