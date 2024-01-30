@@ -1,30 +1,36 @@
 import java.util.Stack;
 
-public class Solution {
+class Solution {
     public int evalRPN(String[] tokens) {
-        int a,b;
-		Stack<Integer> S = new Stack<Integer>();
-		for (String s : tokens) {
-			if(s.equals("+")) {
-				S.add(S.pop()+S.pop());
-			}
-			else if(s.equals("/")) {
-				b = S.pop();
-				a = S.pop();
-				S.add(a / b);
-			}
-			else if(s.equals("*")) {
-				S.add(S.pop() * S.pop());
-			}
-			else if(s.equals("-")) {
-				b = S.pop();
-				a = S.pop();
-				S.add(a - b);
-			}
-			else {
-				S.add(Integer.parseInt(s));
-			}
-		}	
-		return S.pop();
-	}
+        Stack<Integer> st = new Stack<>();
+        for (String token : tokens) {
+            if (isOperator(token)) {
+                int b = st.pop();
+                int a = st.pop();
+                st.push(perform(token, a, b));
+            } else {
+                st.push(Integer.parseInt(token));
+            }
+        }
+        return st.pop();
+    }
+
+    public boolean isOperator(String token) {
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+    }
+
+    public int perform(String op, int a, int b) {
+        switch (op) {
+            case "+":
+                return a + b;
+            case "-":
+                return a - b;
+            case "*":
+                return a * b;
+            case "/":
+                return a / b;
+            default:
+                return 0;
+        }
+    }
 }
