@@ -1,25 +1,21 @@
 class Solution {
     public List<Integer> sequentialDigits(int low, int high) {
-        ArrayList<Integer>ans = new ArrayList<>();
-        String seqD = "123456789";
-        //counting the length of low and high by converting in string
-        String lowS = Integer.toString(low);
-        String highS = Integer.toString(high);
-        int lowL = lowS.length();
-        int highL = highS.length();
-        
-        //Iterating trough the range of length
-        for(int len = lowL;len<=highL;len++)
-        {
-            //Generating the substringof length len
-            for(int i=0;i<=9-len;i++)
-            {
-                int num = Integer.parseInt(seqD.substring(i,i+len));
-                //checking if num is in the range
-                if(num>=low && num <=high)
-                ans.add(num);
+        List<Integer> a = new ArrayList<>();
+
+        for (int i = 1; i <= 9; ++i) {
+            int num = i;
+            int nextDigit = i + 1;
+
+            while (num <= high && nextDigit <= 9) {
+                num = num * 10 + nextDigit;
+                if (low <= num && num <= high) {
+                    a.add(num);
+                }
+                ++nextDigit;
             }
-            }
-            return ans;
+        }
+
+        a.sort(null);
+        return a;
     }
 }
