@@ -7,29 +7,18 @@ class Solution {
             return result;
         }
         
-        Map<String, Integer> wordFreqMap = new HashMap<>();
         int wordLen = words[0].length();
         int totalLen = wordLen * words.length;
-        
-        for (String word : words) {
-            wordFreqMap.put(word, wordFreqMap.getOrDefault(word, 0) + 1);
-        }
+        Arrays.sort(words);
         
         for (int i = 0; i <= s.length() - totalLen; i++) {
-            Map<String, Integer> seenWords = new HashMap<>();
-            int j = 0;
-            while (j < words.length) {
-                String word = s.substring(i + j * wordLen, i + (j + 1) * wordLen);
-                if (!wordFreqMap.containsKey(word)) {
-                    break;
-                }
-                seenWords.put(word, seenWords.getOrDefault(word, 0) + 1);
-                if (seenWords.get(word) > wordFreqMap.getOrDefault(word, 0)) {
-                    break;
-                }
-                j++;
+            String substr = s.substring(i, i + totalLen);
+            String[] substrWords = new String[words.length];
+            for (int j = 0; j < totalLen; j += wordLen) {
+                substrWords[j / wordLen] = substr.substring(j, j + wordLen);
             }
-            if (j == words.length) {
+            Arrays.sort(substrWords);
+            if (Arrays.equals(words, substrWords)) {
                 result.add(i);
             }
         }
