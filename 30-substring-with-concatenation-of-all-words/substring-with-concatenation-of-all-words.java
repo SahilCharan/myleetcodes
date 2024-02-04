@@ -1,28 +1,31 @@
-import java.util.*;
-
 class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
-        List<Integer> result = new ArrayList<>();
-        if (s == null || s.length() == 0 || words == null || words.length == 0) {
-            return result;
+        int n = words.length;
+        HashMap<String, Integer> map = new HashMap<>();
+        List<Integer> ans = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            map.put(words[i],map.getOrDefault(words[i],0)+1);
         }
-        
-        int wordLen = words[0].length();
-        int totalLen = wordLen * words.length;
-        Arrays.sort(words);
-        
-        for (int i = 0; i <= s.length() - totalLen; i++) {
-            String substr = s.substring(i, i + totalLen);
-            String[] substrWords = new String[words.length];
-            for (int j = 0; j < totalLen; j += wordLen) {
-                substrWords[j / wordLen] = substr.substring(j, j + wordLen);
+        int k = words[0].length() * words.length;
+        int z = words[0].length();
+        int i = 0, j = 0;
+        while (j < s.length()) {
+            if (j - i + 1 == k) {
+                String sub = s.substring(i, j + 1);
+                HashMap<String, Integer> map2 = new HashMap<>();
+                int p = 0;
+                while (p < sub.length()) {
+                    String temp = sub.substring(p, p + z);
+                    map2.put(temp,map2.getOrDefault(temp,0)+1);
+                    p +=z;
+                }
+                if (map.equals(map2)){
+                    ans.add(i);
+                }
+                i++;
             }
-            Arrays.sort(substrWords);
-            if (Arrays.equals(words, substrWords)) {
-                result.add(i);
-            }
+            j++;
         }
-        
-        return result;
+        return ans;
     }
 }
