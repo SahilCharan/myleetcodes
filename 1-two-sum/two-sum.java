@@ -1,31 +1,23 @@
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        int l = nums.length,p=0;
-        int a[]=new int[2];
-        
-        if(l==2){
-            if(nums[0]+nums[1]==target)
-            {
-                a[0]=0;
-                a[1]=1;
-            }
+       Set<Integer> set = new HashSet<>();
+       int ans[] = new int[2];
+       for(int i = 0; i < nums.length; i++) {
+           int complement = target - nums[i];
+           if(set.contains(complement)) {
+               ans[0] = getIndex(nums, complement);
+               ans[1] = i;
+               break;
+           }
+           set.add(nums[i]);
+       }
+       return ans;
+    }
+    
+    public int getIndex(int[] nums, int x) { 
+        for(int i = 0; i < nums.length; i++) {
+            if(nums[i] == x) return i;
         }
-        else
-        for(int i=0;i<l;i++)
-        {
-            for(int j=i+1;j<l;j++)
-            {
-                if(nums[i]+nums[j]==target)
-                {
-                    a[0]=i;
-                    a[1]=j;p=1;
-                    break;
-                }
-            }
-            if(p==1)
-            break;
-           
-        }
-        return a;
+        return -1;
     }
 }
