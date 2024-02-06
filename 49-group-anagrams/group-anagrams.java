@@ -4,10 +4,7 @@ class Solution {
         Map<String, List<String>> map = new HashMap<>();
         
         for (String str : strs) {
-            char[] charArray = str.toCharArray();
-            Arrays.sort(charArray);
-            String sortedStr = new String(charArray);
-            
+            String sortedStr = sortString(str);
             List<String> list = map.getOrDefault(sortedStr, new ArrayList<>());
             list.add(str);
             map.put(sortedStr, list);
@@ -15,5 +12,11 @@ class Solution {
         
         ans.addAll(map.values());
         return ans;
+    }
+    
+    public String sortString(String str) {
+        char[] charArray = str.toCharArray();
+        Arrays.sort(charArray);
+        return new String(charArray);
     }
 }
