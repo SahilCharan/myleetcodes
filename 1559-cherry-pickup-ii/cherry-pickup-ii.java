@@ -1,43 +1,21 @@
-import java.util.HashMap;
-import java.util.Map;
-
 class Solution {
     public int cherryPickup(int[][] grid) {
-        int n = grid.length;
-        int m = grid[0].length;
-        Map<String, Integer> memo = new HashMap<>();
-
-        return ans(grid, 0, 0, m - 1, memo);
-    }
-
-    private int ans(int[][] grid, int row, int l, int r, Map<String, Integer> memo) {
-        int n = grid.length;
-        int m = grid[0].length;
-
-        String key = row + "," + l + "," + r;
-        if (memo.containsKey(key)) {
-            return memo.get(key);
-        }
-
-        if (row == n) {
-            return 0;
-        }
-
-        int best = Integer.MIN_VALUE;
-        for (int i : new int[]{l - 1, l, l + 1}) {
-            for (int j : new int[]{r - 1, r, r + 1}) {
-                if (i >= 0 && i < m && j >= 0 && j < m) {
-                    best = Math.max(best, ans(grid, row + 1, i, j, memo));
+    int C = grid[0].length;
+    int[][] dp = new int[C][C], old = new int[C][C];
+    for(int r = grid.length - 1; r >= 0; r--) {
+        for(int c1 = Math.min(r, C - 1); c1 >= 0; c1--) {
+            for(int c2 = Math.max(c1, C - 1 - r); c2 < C; c2++) {
+                int max = 0;
+                for(int i = c1 - 1; i <= c1 + 1; i++) {
+                    for(int j = c2 - 1; j <= c2 + 1; j++) {
+                        if(i >= 0 && i < C && j >= 0 && j < C && i <= j) max = Math.max(max, old[i][j]);
+                    }
                 }
+                dp[c1][c2] = max + grid[r][c1] + (c1 == c2 ? 0 : grid[r][c2]);
             }
         }
-
-        best += grid[row][l];
-        if (l != r) {
-            best += grid[row][r];
-        }
-
-        memo.put(key, best);
-        return best;
+        int[][] temp = dp; dp = old; old = temp;
     }
+    return old[0][C - 1];
+}
 }
