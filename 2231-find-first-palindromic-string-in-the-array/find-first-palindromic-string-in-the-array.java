@@ -1,10 +1,10 @@
 class Solution {
     public String firstPalindrome(String[] words) {
-        for(int i = 0;i<words.length;i++)
+        for(String word : words)
         {
-            if(check(words[i])==true)
+            if(check(word)==true)
             {
-                return words[i];
+                return word;
                 
             }
         }
@@ -12,14 +12,15 @@ class Solution {
     }
     public boolean check(String word)
     {
-        String rev ="";
-        for(int i =0;i<word.length();i++)
+        if(word== null || word.length() == 0){
+            return false;}
+        for(int i =0;i<word.length()/2;i++)
         {
-            rev = word.charAt(i)+rev;
+            int start =word.charAt(i);
+            int end = word.charAt(word.length()-1-i);
+            if(start!=end)
+            return false;
         }
-        if(rev.equals(word))
         return true;
-        else
-        return false;
     }
 }
