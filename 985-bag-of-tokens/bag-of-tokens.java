@@ -1,26 +1,29 @@
 class Solution {
-    public int bagOfTokensScore(int[] tokens, int power) {
-        Arrays.sort(tokens);
-        
-        int count = 0;
-        int l = 0, r = tokens.length - 1;
+     public int bagOfTokensScore(int[] tokens, int power) {
         int maxScore = 0;
-        while (l <= r) {
-            if (tokens[l] <= power) {
-                count++;
-                power -= tokens[l];
-                l++;
-                maxScore = Math.max(maxScore, count);
-            } else {
-                if (count >= 1) {
-                    power += tokens[r];
-                    r--;
-                    count--;
-                } else {
-                    break;
-                }
+        int score =0;
+        int n = tokens.length;
+        Arrays.sort(tokens);
+        int i = 0;
+        int j = n -1;
+        while(i <= j){
+            if(power >= tokens[i]){
+                power = power - tokens[i];
+                score++;
+                i++;
+                maxScore = Math.max(maxScore,score);
+            }
+            else if(score >=1){
+                power = power+tokens[j];
+                score--;
+                j--;
+                maxScore = Math.max(maxScore,score);
+            }
+            else{
+                return maxScore;
             }
         }
         return maxScore;
+
     }
 }
