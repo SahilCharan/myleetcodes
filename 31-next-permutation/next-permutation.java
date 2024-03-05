@@ -45,7 +45,7 @@ class Solution {
             //kya hmko pura sort krna hoga , nhi jo indx1 ka jo value aaya tha wha se end tk i.e sort to the right after swappig
 
             // to hm kr rahe hai reverse
-            reverse(nums,idx1+1);
+            Arrays.sort(nums, idx1+1, nums.length);
 
             //mil gya hmko answer to kr do ab return
 
