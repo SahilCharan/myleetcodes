@@ -1,48 +1,39 @@
 public class RandomizedSet {
-    private List<Integer> arr;
-    private Map<Integer, Integer> set;
-    private int size;
-
+    ArrayList<Integer> nums;
+    HashMap<Integer, Integer> locs;
+    java.util.Random rand = new java.util.Random();
+    /** Initialize your data structure here. */
     public RandomizedSet() {
-        arr = new ArrayList<>();
-        set = new HashMap<>();
-        size = 0;
+        nums = new ArrayList<Integer>();
+        locs = new HashMap<Integer, Integer>();
     }
-
+    
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
     public boolean insert(int val) {
-        if (set.containsKey(val) && set.get(val) != -1) {
-            return false;
-        }
-
-        arr.add(val);
-        set.put(val, size);
-        size++;
-
+        boolean contain = locs.containsKey(val);
+        if ( contain ) return false;
+        locs.put( val, nums.size());
+        nums.add(val);
         return true;
     }
-
+    
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
     public boolean remove(int val) {
-        if (set.containsKey(val) && set.get(val) != -1) {
-            int index = set.get(val);
-
-            // Swap with the last element
-            int lastElement = arr.get(size - 1);
-            arr.set(index, lastElement);
-            set.put(lastElement, index);
-
-            // Remove the last element
-            arr.remove(size - 1);
-            set.put(val, -1); // Mark as removed
-            size--;
-
-            return true;
+        boolean contain = locs.containsKey(val);
+        if ( ! contain ) return false;
+        int loc = locs.get(val);
+        if (loc < nums.size() - 1 ) { // not the last one than swap the last one with this val
+            int lastone = nums.get(nums.size() - 1 );
+            nums.set( loc , lastone );
+            locs.put(lastone, loc);
         }
-
-        return false;
+        locs.remove(val);
+        nums.remove(nums.size() - 1);
+        return true;
     }
-
+    
+    /** Get a random element from the set. */
     public int getRandom() {
-        int index = new Random().nextInt(size);
-        return arr.get(index);
+        return nums.get( rand.nextInt(nums.size()) );
     }
 }
