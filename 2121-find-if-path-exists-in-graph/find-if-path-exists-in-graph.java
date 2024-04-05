@@ -20,24 +20,52 @@ class Solution {
             adjList.get(v).add(u);
         }
 
-        int vis[] = new int[n];
+        
         // performing dfs algo here
-         return dfs(adjList, vis, source, destination);
+        //  return dfs(adjList, vis, source, destination);
+        return bfs(adjList, source, destination);
     }
-    public boolean dfs(ArrayList<ArrayList<Integer>> graph, int[] visited, int start, int end) {
-        if (start == end) return true; // Base case: Reached the destination node
+    // public boolean dfs(ArrayList<ArrayList<Integer>> graph, int[] visited, int start, int end) {
+    //     if (start == end) return true; // Base case: Reached the destination node
 
-        // Mark the current node as visited
-        visited[start] = 1;
+    //     // Mark the current node as visited
+    //     visited[start] = 1;
 
-        // Explore all unvisited neighbors of the current node
-        for (int neighbor : graph.get(start)) {
-            if (visited[neighbor] == 0 && dfs(graph, visited, neighbor, end)) {
-                return true; // Path found from neighbor
+    //     // Explore all unvisited neighbors of the current node
+    //     for (int neighbor : graph.get(start)) {
+    //         if (visited[neighbor] == 0 && dfs(graph, visited, neighbor, end)) {
+    //             return true; // Path found from neighbor
+    //         }
+    //     }
+
+    //     // No path found from current node
+    //     return false;
+    // }
+
+    public boolean bfs(ArrayList<ArrayList<Integer>>graph,  int start, int end)
+    {
+        // creating a queue
+        int visited[] = new int[graph.size()];
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+        visited[start] =1;
+        while(!q.isEmpty())
+        {
+            int curr = q.poll();
+            if(curr == end)
+            return true;
+
+            for(int neighbour : graph.get(curr))
+            {
+                if(visited[neighbour]==0)
+                {
+                    visited[neighbour] = 1;
+                    q.add(neighbour);
+
+                }
             }
         }
-
-        // No path found from current node
         return false;
+
     }
 }
