@@ -1,28 +1,29 @@
 class Solution {
     public boolean validPath(int n, int[][] edges, int source, int destination) {
-        if (source == destination) return true; // Base case: If source and destination are the same, there's a path
+        if(source == destination)
+        return true;
 
-        // Create an adjacency list to represent the graph
-        ArrayList<ArrayList<Integer>> adjList = new ArrayList<ArrayList<Integer>>(n);
-        for (int i = 0; i < n; i++) {
-            adjList.add(new ArrayList<Integer>()); // Initialize inner lists for each node (representing connections)
+        //creating an adjecency list
+
+        ArrayList<ArrayList<Integer>> adjList = new ArrayList<ArrayList<Integer>>();
+        for(int i =0;i<n;i++)
+        {
+            adjList.add( new ArrayList<Integer>());
         }
+        //adding element in the adjency LIst
 
-        // Build the adjacency list based on edges
-        for (int i = 0; i < edges.length; i++) {
+        for(int i=0;i<edges.length;i++)
+        {
             int u = edges[i][0];
             int v = edges[i][1];
-            adjList.get(u).add(v); // Add connection from u to v
-            adjList.get(v).add(u); // Since it's an undirected graph, add connection from v to u as well
+            adjList.get(u).add(v);
+            adjList.get(v).add(u);
         }
 
-        // Visited array to track explored nodes during DFS
-        int[] visited = new int[n];
-
-        // Perform DFS starting from the source node
-        return dfs(adjList, visited, source, destination);
+        int vis[] = new int[n];
+        // performing dfs algo here
+         return dfs(adjList, vis, source, destination);
     }
-
     public boolean dfs(ArrayList<ArrayList<Integer>> graph, int[] visited, int start, int end) {
         if (start == end) return true; // Base case: Reached the destination node
 
