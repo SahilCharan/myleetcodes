@@ -1,25 +1,32 @@
 class Solution {
+    // ))((*)*)
+    // (((*))
+    // (()*))
     public boolean checkValidString(String s) {
-        int leftopen = 0, rightopen =0;
-        for(int i=0;i<s.length();i++)
-        {
-           char c =s.charAt(i);
-           if(c=='(')
-           {leftopen++;rightopen++;}
-           else
-           if(c==')')
-           {leftopen--;rightopen--;}
-           else
-           if(c=='*')
-           {leftopen--;rightopen++;}
-
-           if(rightopen<0)return false;
-           else
-           if(leftopen<0) leftopen=0;
+        int open = 0;
+        for (char c: s.toCharArray()) {
+            if (c == '(' || c == '*') {
+                open++;
+            } else {
+                open--;
+            }
+            if (open < 0) {
+                return false;
+            }
         }
-        if(leftopen==0)
+        int close = 0;
+        for (int i = s.length()-1; i >= 0; i--) {
+            char c = s.charAt(i);
+            if (c == ')' || c == '*') {
+                close++;
+            } else {
+                close--;
+            }
+            if (close < 0) {
+                return false;
+            }
+        }
+
         return true;
-        else
-        return false;
     }
 }
