@@ -1,28 +1,30 @@
 class Solution {
     public int countStudents(int[] students, int[] sandwiches) {
-        int ones = 0; //count of students who prefer type1
-        int zeros = 0; //count of students who prefer type0
-		
-        for(int stud : students){
-            if(stud == 0) zeros++;
-            else ones++;
+        Stack<Integer> sand= new Stack<>();
+        Queue<Integer> stud= new LinkedList<>();
+        int i=0;
+        int j=students.length-1;
+        while(i<students.length){
+            sand.push(sandwiches[j]);
+            stud.add(students[i]);
+            i++;
+            j--;
         }
-        
-        // for each sandwich in sandwiches
-        for(int sandwich : sandwiches){
-            if(sandwich == 0){  // if sandwich is of type0
-                if(zeros == 0){ // if no student want a type0 sandwich
-                    return ones;
-                }
-                zeros--;
+        while(!stud.isEmpty()){
+            if(stud.peek()==sand.peek()){
+                stud.remove();
+                sand.pop();
             }
-            else{  // if sandwich is of type1
-                if(ones == 0){  // if no student want a type1 sandwich 
-                    return zeros;
+            else{
+                if(stud.contains(sand.peek())){
+                    stud.add(stud.remove());
                 }
-                ones--;
+                else{
+                    break;
+                }
+                
             }
         }
-        return 0;
+        return stud.size();
     }
 }
