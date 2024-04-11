@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 class Solution {
     public String removeKdigits(String num, int k) {
         int len = num.length();
@@ -6,7 +8,6 @@ class Solution {
         Stack<Character> stk = new Stack<>();
         
         for (char ch : num.toCharArray()) {
-            // While k > 0 and the current digit is less than the top of stack, remove digits from the stack
             while (!stk.isEmpty() && k > 0 && ch < stk.peek()) {
                 stk.pop();
                 k--;
@@ -14,13 +15,13 @@ class Solution {
             stk.push(ch);
         }
         
-        // If we still have remaining digits to remove
+        // If we still have remaining digits to remove, remove from the end of the stack
         while (k > 0) {
             stk.pop();
             k--;
         }
         
-        // Constructing the result string
+        // Constructing the result string directly from the stack
         StringBuilder ans = new StringBuilder();
         while (!stk.isEmpty()) {
             ans.insert(0, stk.pop());
