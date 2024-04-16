@@ -1,29 +1,31 @@
 class Solution {
     public int candy(int[] ratings) {
+        int candies[] = new int[ratings.length];
         int len = ratings.length;
-        int[] candies = new int[len];
-        Arrays.fill(candies, 1); // Initialize each child with 1 candy
-        
-        // First pass: from left to right
-        for (int i = 1; i < len; i++) {
-            if (ratings[i] > ratings[i - 1]) {
-                candies[i] = candies[i - 1] + 1; // Give more candy to the right if its rating is higher
+        Arrays.fill(candies,1);// sb ko ek candies do
+//phle left se right jake dekho or ek taraf se jo bada hai usko ek candies do
+        for(int i= 1;i<len;i++)
+        {
+            if(ratings[i]>ratings[i-1])
+            {
+                candies[i]=candies[i-1]+1;// right wale ka jada hai to jada candies usko do
+            }
+
+        }
+        // ab left se right jake dekh0 or jiska jada hai , usko assign kro
+        for(int i = len-2;i>=0;i--)
+        {
+            if(ratings[i]>ratings[i+1])
+            {
+                candies[i]= Math.max(candies[i],candies[i+1]+1);
             }
         }
-        
-        // Second pass: from right to left
-        for (int i = len - 2; i >= 0; i--) {
-            if (ratings[i] > ratings[i + 1]) {
-                candies[i] = Math.max(candies[i], candies[i + 1] + 1); // Take maximum of current value and the one from the right
-            }
+        //ab sb candies ko add kr do
+        int sum =0;
+        for(int cn: candies)
+        {
+            sum+=cn;
         }
-        
-        // Sum up all the candies
-        int sum = 0;
-        for (int candy : candies) {
-            sum += candy;
-        }
-        
         return sum;
     }
 }
