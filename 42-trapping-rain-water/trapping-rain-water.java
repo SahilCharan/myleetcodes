@@ -1,41 +1,40 @@
 class Solution {
     public int trap(int[] height) {
-        int l = height.length;
-        int leftmax[] = new int[l];
-        int rightmax[] = new int[l];
-        leftmax = getleftmax(height,l);
-        rightmax = getrightmax(height,l);
-        int sum =0;
-        for(int i =0;i<l;i++)
-        {
-            int h =Math.min(leftmax[i],rightmax[i])-height[i];
-            sum+=h;
-        }
-        return sum;
+       int len  = height.length;
+        int leftmax[] = new int[len];
+        int[] rightmax  = new int[len];
+        leftmax = getleftmax(height,len);
+        rightmax =  getrightmax(height,len);
+        int count= 0;
 
+        for(int i =0;i<len;i++)
+        {
+            int h = Math.min(leftmax[i],rightmax[i])-height[i];
+            count+=h;
+
+        }
+        return count;
     }
-    public int[] getleftmax(int height[], int n)
+    public int[] getleftmax(int[] height,int len)
     {
-        int leftmaxarray[] = new int[n];
-        int currmax =0;
-        for(int i =0;i<n;i++)
+        int leftmax[] = new int[len];
+        int max =0;
+        for(int i=0;i<len;i++)
         {
-            leftmaxarray[i]=Math.max(height[i],currmax);
-            currmax = leftmaxarray[i];
-
+            max=Math.max(max,height[i]);
+            leftmax[i] = max;
         }
-        return leftmaxarray;
+        return leftmax;
     }
-    public int[] getrightmax(int height[], int n)
+     public int[] getrightmax(int[] height,int len)
     {
-        int rightmaxarray[] = new int[n];
-        int currmax =0;
-        for(int i =n-1;i>=0;i--)
+        int rightmax[] = new int[len];
+        int max =0;
+        for(int i=len-1;i>=0;i--)
         {
-            rightmaxarray[i]=Math.max(height[i],currmax);
-            currmax = rightmaxarray[i];
-
+            max=Math.max(max,height[i]);
+            rightmax[i] = max;
         }
-        return rightmaxarray;
+        return rightmax;
     }
 }
