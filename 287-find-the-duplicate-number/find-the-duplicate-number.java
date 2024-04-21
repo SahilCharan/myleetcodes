@@ -1,18 +1,16 @@
 class Solution {
-        public int findDuplicate(int[] nums) {
-        int slow = 0;
-        int fast = 0;
-        do {
-            slow = nums[slow];
-            fast = nums[nums[fast]];
-        } while (slow != fast);
-
-        slow = 0;
-        while (slow != fast) {
-            slow = nums[slow];
-            fast = nums[fast];
+    public int findDuplicate(int[] nums) {
+        // visited
+        int l = nums.length;
+        for(int n:nums)
+        {
+            int idx = Math.abs(n);
+            if(nums[idx]<0)
+            {
+                return idx;
+            }
+            nums[idx] = -nums[idx];
         }
-        
-        return slow;
+        return l;
     }
 }
