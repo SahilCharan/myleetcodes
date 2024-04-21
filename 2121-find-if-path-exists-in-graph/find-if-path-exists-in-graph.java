@@ -45,17 +45,17 @@ class Solution {
     public boolean bfs(ArrayList<ArrayList<Integer>>graph,  int start, int end)
     {
         // creating a queue
-        int visited[] = new int[graph.size()];
+        int visited[] = new int[graph.size()];// creating a visited aary
         Queue<Integer> q = new LinkedList<>();
-        q.add(start);
-        visited[start] =1;
+        q.add(start);// adding the source to the queuw
+        visited[start] =1;// source k address ko 1 kr do thatis it is visited
         while(!q.isEmpty())
         {
-            int curr = q.poll();
-            if(curr == end)
+            int curr = q.poll(); // extract the 1st element
+            if(curr == end)// same h to h exist, to leave
             return true;
 
-            for(int neighbour : graph.get(curr))
+            for(int neighbour : graph.get(curr)) /// nhi to add the element in the queue
             {
                 if(visited[neighbour]==0)
                 {
