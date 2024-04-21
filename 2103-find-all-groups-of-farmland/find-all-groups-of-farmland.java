@@ -1,25 +1,27 @@
 class Solution {
-    int[] arr;
     public int[][] findFarmland(int[][] land) {
-        List<int[]> res = new ArrayList<>();
-        for(int i=0;i<land.length;i++)
-            for(int j=0;j<land[0].length;j++){
-                if(land[i][j] == 1){
-                    arr = new int[]{i,j,0,0};
-                    dfs(land,i,j);
-                    res.add(arr);
+        
+        int n = land.length;
+        int m = land[0].length;
+
+        List<int[]> ans = new ArrayList<>();
+
+        for (int r1 = 0; r1 < n; r1++) {
+            for (int c1 = 0; c1 < m; c1++) {
+                if (land[r1][c1] == 1) {
+                    int r2 = r1, c2 = c1;
+
+                    for (r2 = r1; r2 < n && land[r2][c1] == 1; r2++) {
+                        for (c2 = c1; c2 < m && land[r2][c2] == 1; c2++) {
+                            land[r2][c2] = 0;
+                        }
+                    }
+
+                    ans.add(new int[]{r1, c1, r2 - 1, c2 - 1});
                 }
             }
-        return res.stream().map(i->i).toArray(int[][] :: new);
-    }
-    public void dfs(int[][] land, int i,int j){
-        if(i<0 || j<0 || i>=land.length || j>= land[0].length || land[i][j] == 0) return;
-        arr[2] = Math.max(i,arr[2]);
-        arr[3] = Math.max(j,arr[3]);
-        land[i][j] = 0;
-        dfs(land,i-1,j);
-        dfs(land,i,j+1);
-        dfs(land,i+1,j);
-        dfs(land,i,j-1);
+        }
+
+        return ans.toArray(new int[ans.size()][]);
     }
 }
