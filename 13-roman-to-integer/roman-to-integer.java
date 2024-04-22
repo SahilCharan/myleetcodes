@@ -1,7 +1,6 @@
 class Solution {
-    public int romanToInt(String s) {
-        
-        Map<Character,Integer> map = new HashMap<Character, Integer>();
+public int romanToInt(String s) {
+Map<Character,Integer> map = new HashMap<Character, Integer>();
 int sum=0;
 map.put('I',1);
 map.put('V',5);
@@ -20,5 +19,5 @@ for(int i=0;i<s.length();i++){
 sum = sum + (map.get(s.charAt(i)));
 }
 return sum;
-    }
+}
 }
