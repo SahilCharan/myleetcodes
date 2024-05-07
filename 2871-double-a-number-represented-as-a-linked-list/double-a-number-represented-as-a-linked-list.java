@@ -1,33 +1,45 @@
-import java.math.BigInteger;
-
-class Solution {
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+public class Solution {
     public ListNode doubleIt(ListNode head) {
-        ListNode temp = head;
-        BigInteger num = BigInteger.ZERO;
+        ListNode curr = head;
+        ListNode prev = null;
 
-        // Calculate the integer value represented by the linked list
-        while (temp != null) {
-            num = num.multiply(BigInteger.TEN).add(BigInteger.valueOf(temp.val));
-            temp = temp.next;
+        // Traverse the linked list
+        while (curr != null) {
+            int twiceOfVal = curr.val * 2;
+
+            // If the doubled value is less than 10
+            if (twiceOfVal < 10) {
+                curr.val = twiceOfVal;
+            } 
+            // If doubled value is 10 or greater
+            else if (prev != null) { // other than first node
+                // Update current node's value with units digit of the doubled value
+                curr.val = twiceOfVal % 10;
+                // Add the carry to the previous node's value
+                prev.val = prev.val + 1;
+            } 
+            // If it's the first node and doubled value is 10 or greater
+            else { // first node
+                // Create a new node with carry as value and link it to the current node
+                head = new ListNode(1, curr);
+                // Update current node's value with units digit of the doubled value
+                curr.val = twiceOfVal % 10;
+            }
+
+            // Update prev and curr pointers
+            prev = curr;
+            curr = curr.next;
         }
-
-        // Double the integer value
-        num = num.multiply(BigInteger.TWO);
-
-        // Convert the doubled integer value to a string
-        String nums = num.toString();
-
-        // Initialize a dummy node to represent the head of the new linked list
-        ListNode dummy = new ListNode();
-        ListNode current = dummy;
-
-        // Create new nodes for each digit of the doubled integer value
-        for (int i = 0; i < nums.length(); i++) {
-            int digit = nums.charAt(i) - '0'; // Convert character to integer
-            current.next = new ListNode(digit); // Create a new node with the digit
-            current = current.next; // Move to the next node
-        }
-
-        return dummy.next; // Return the head of the new linked list
+        return head;
     }
 }
