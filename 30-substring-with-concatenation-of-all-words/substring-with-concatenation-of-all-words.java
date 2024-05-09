@@ -1,13 +1,12 @@
 class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
-        int n = words.length;
-        HashMap<String, Integer> map = new HashMap<>();
-        List<Integer> ans = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            map.put(words[i],map.getOrDefault(words[i],0)+1);
-        }
         int k = words[0].length() * words.length;
-        int z = words[0].length();
+        int n = words[0].length();
+        List<Integer> list = new ArrayList<>();
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            map.put(words[i], map.getOrDefault(words[i], 0) + 1);
+        }
         int i = 0, j = 0;
         while (j < s.length()) {
             if (j - i + 1 == k) {
@@ -15,17 +14,20 @@ class Solution {
                 HashMap<String, Integer> map2 = new HashMap<>();
                 int p = 0;
                 while (p < sub.length()) {
-                    String temp = sub.substring(p, p + z);
-                    map2.put(temp,map2.getOrDefault(temp,0)+1);
-                    p +=z;
+                    String temp = sub.substring(p, p + n);
+                    map2.put(temp, map2.getOrDefault(temp, 0) + 1);
+                    p += n;
+
                 }
-                if (map.equals(map2)){
-                    ans.add(i);
-                }
+                if (map.equals(map2))
+                    list.add(i);
+
                 i++;
             }
             j++;
+
         }
-        return ans;
+        return list;
+
     }
 }
