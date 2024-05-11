@@ -14,6 +14,7 @@ class Solution {
             {
                
                 set.add(nums[right]);
+                maxsum = Math.max(currsum,maxsum);
             }
             else
             {
@@ -28,7 +29,7 @@ class Solution {
             set.add(nums[right]);
             
             right++;
-            maxsum = Math.max(currsum,maxsum);
+            
         }
         return maxsum;
     }
