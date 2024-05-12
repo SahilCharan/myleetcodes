@@ -1,39 +1,41 @@
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         int n = nums.length;
-        if (n == 0 || k == 0) // Handle edge cases
-            return new int[0];
-        ArrayDeque<Integer> deque =  new ArrayDeque<>();
-        int result[] = new int[n-k+1];
-        for(int i=0;i<k;i++)
+        int ans[] = new int[n-k+1];
+        int leftmax[] = new int[n];
+        int rightmax[] =  new int[n];
+
+        leftmax= fillLeftMax(nums,k);
+        rightmax = fillRightMax(nums,k);
+
+        //sliding window now
+
+        for(int i =0;i<ans.length;i++)
         {
-            while(!deque.isEmpty()&& nums[i]>nums[deque.peekLast()]){
-                deque.pollLast();
-            }
-            deque.offerLast(i);
+            ans[i] = Math.max(leftmax[i+k-1],rightmax[i]);
         }
-        result[0] = nums[deque.peekFirst()];
+        return ans;
+    }
 
-        // Slide the window and update the result array
-        for (int i = k; i < n; i++) {
-            // Remove indices that are outside the current window
-            while (!deque.isEmpty() && deque.peekFirst() <= i - k) {
-                deque.pollFirst();
-            }
-            
-            // Remove indices of elements smaller than the current element
-            while (!deque.isEmpty() && nums[i] >= nums[deque.peekLast()]) {
-                deque.pollLast();
-            }
-            
-            // Add the current index to the deque
-            deque.offerLast(i);
-            
-            // Store the maximum element of the current window
-            result[i - k + 1] = nums[deque.peekFirst()];
+    public int[] fillLeftMax(int nums[],int k)
+    {
+        int left[] = new int[nums.length];
+        left[0] = nums[0];
+
+        for(int i = 1;i<nums.length;i++){
+            left[i] = (i%k==0)?nums[i]:Math.max(nums[i],left[i-1]);
         }
+        return left;
+    }
+    public int[] fillRightMax(int nums[],int k)
+    {
+        int right[] = new int[nums.length];
+        right[nums.length-1] = nums[nums.length-1];
 
-        return result;
-
+        for(int i = right.length-2;i>=0;i--)
+        {
+            right[i] = (i%k==0)?nums[i]:Math.max(nums[i],right[i+1]);
+        }
+        return right;
     }
 }
