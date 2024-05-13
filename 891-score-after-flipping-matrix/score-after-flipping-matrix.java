@@ -36,7 +36,7 @@ class Solution {
         {
             for(int j =0;j<n;j++)
             {
-                sum+= grid[i][j]*(int)Math.pow(2,n-j-1);
+                sum+= grid[i][j]*Math.pow(2,n-j-1);
                 
 
             }
