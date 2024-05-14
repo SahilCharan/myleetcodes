@@ -1,33 +1,39 @@
 class Solution {
     public int getMaximumGold(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
+         int ans = 0;
 
-        int maxGold = 0;
-        for(int i =0;i<m;i++)
-        {
-            for(int j =0;j<n;j++)
-            {
-                if(grid[i][j]!=0)
-                maxGold = Math.max(maxGold,DFS(grid,i,j,m,n));
+        for (int i=0;i<grid.length;i++){
+            for (int j=0;j<grid[i].length;j++){
+                if (grid[i][j]!=0){
+                    ans = Math.max(ans,helper(grid,i,j,0));
+                }
             }
         }
-        return maxGold;
+        return ans;
     }
-    public int DFS(int grid[][],int i, int j, int m,int n)
-    {
-        if(i>m-1||i<0 || j>n-1||j<0 || grid[i][j] == 0)
-        return 0;
+    static int helper(int [][]grid , int row, int col, int sum){
 
-        int orig = grid[i][j];
-        int max = 0;
-        grid[i][j] = 0;
-        int up =  DFS(grid,i-1,j,m,n);
-        int down = DFS(grid,i+1,j,m,n);
-        int right =  DFS(grid,i,j+1,m,n);
-        int left=  DFS(grid,i,j-1,m,n);
-         
-         grid[i][j] = orig;
-         return orig+ Math.max(Math.max(left,right),Math.max(up,down));
+        if(grid[row][col]==0){
+            return sum;
+        }
+        sum = sum+grid[row][col];
+        int max=0;
+        int temp = grid[row][col];
+        grid[row][col]=0;
+
+        if(row<grid.length-1){
+            max = Math.max(max, helper(grid,row+1,col,sum));
+        }
+        if(col<grid[0].length-1){
+            max = Math.max(max, helper(grid,row,col+1,sum));
+        }
+        if(row>0){
+            max = Math.max(max, helper(grid,row-1,col,sum));
+        }
+        if (col>0){
+            max = Math.max(max, helper(grid,row,col-1,sum));
+        }
+        grid[row][col] = temp;
+        return max;
     }
 }
