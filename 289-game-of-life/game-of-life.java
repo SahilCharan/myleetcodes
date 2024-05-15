@@ -1,54 +1,52 @@
+//BFS Approach
+//TC: O(MXN)
+//SC: O(1)
 class Solution {
+    int rows;
+    int cols;
     public void gameOfLife(int[][] board) {
-        int m = board.length;
-        int n = board[0].length;
-        
-        int[][] updatedBoard = new int[m][n];
-        
-        // Iterate through each cell in the original board
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                // Calculate the new state for the current cell
-                int newState = calculateNewState(board, i, j, m, n);
-                // Update the corresponding cell in the updated board
-                updatedBoard[i][j] = newState;
+        //edge case
+        if(board == null || board.length == 0) return;
+
+        //0 -> 2
+        //1 -> 3
+        //general case
+        rows = board.length;
+        cols = board[0].length;
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                //rule 1 and 3 
+                int count = getLivesCount(board, i, j);
+                if(board[i][j] == 1 && (count < 2 || count > 3)){
+                    board[i][j] = 2;
+                }
+                //rule 4
+                if(board[i][j] == 0 && count == 3){
+                    board[i][j] = 3;
+                }
             }
         }
-        
-        // Copy the updated states back to the original board
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                board[i][j] = updatedBoard[i][j];
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if(board[i][j] == 3){
+                    board[i][j] = 1;
+                }
+                if(board[i][j] == 2){
+                    board[i][j] = 0;
+                }
             }
         }
     }
-    
-    private int calculateNewState(int[][] board, int i, int j, int m, int n) {
-        int liveNeighbors = countLiveNeighbors(board, i, j, m, n);
-        int currentState = board[i][j];
-        
-        // Apply rules of the Game of Life
-        if (currentState == 1 && (liveNeighbors < 2 || liveNeighbors > 3)) {
-            return 0; // Cell dies due to underpopulation or overpopulation
-        } else if (currentState == 0 && liveNeighbors == 3) {
-            return 1; // Cell becomes alive due to reproduction
-        } else {
-            return currentState; // Cell remains in the same state
-        }
-    }
-    
-    private int countLiveNeighbors(int[][] board, int i, int j, int m, int n) {
-        int[][] directions = { {-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1} };
+    private int getLivesCount(int[][] board, int i, int j){
         int count = 0;
-        
-        for (int[] dir : directions) {
-            int newRow = i + dir[0];
-            int newCol = j + dir[1];
-            if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && board[newRow][newCol] == 1) {
+        int[][] dirs = new int[][]{{0,1},{1,0}, {0,-1}, {-1,0}, {1,1},{-1,-1},{1,-1},{-1,1}};
+        for(int[] dir : dirs){
+            int r = i + dir[0];
+            int c = j + dir[1];
+            if(r >= 0 && c >= 0 && r < rows && c < cols && (board[r][c] == 1 || board[r][c] == 2)){
                 count++;
             }
         }
-        
         return count;
     }
 }
