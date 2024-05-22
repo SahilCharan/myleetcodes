@@ -14,34 +14,29 @@
  * }
  */
 class Solution {
-    boolean res;
     public boolean findTarget(TreeNode root, int k) {
-        Set<Integer> set = new HashSet<>();
-        dfs(root, k,set);
-        if(res)
-        return true;
-        else
-        return false;
-
-
-    }
-    public void dfs(TreeNode root, int k,Set<Integer> set){
-        if(root==null)
-        return;
-        
-
-        int num = root.val;
-        int compliment = k-num;
-
-        if(set.contains(compliment)){
-            res = true;
-            return;
+        ArrayList<Integer> list=new ArrayList<>();
+        inorder(root,list);
+        int n=list.size();
+        int i=0,j=n-1;
+        int sum=0;
+        while(i<j){
+           if(list.get(i)+list.get(j)==k){
+            return true;
+           }
+           else if(list.get(i)+list.get(j)>k){
+            j--;
+           }else{
+            i++;
+           }
         }
-        set.add(num);
-        dfs(root.left,k,set);
-        dfs(root.right,k,set);
-
-
+        return false;
         
+    }
+    void inorder(TreeNode root,ArrayList<Integer> list){
+        if(root==null) return;
+        inorder(root.left,list);
+        list.add(root.val);
+        inorder(root.right,list);
     }
 }
