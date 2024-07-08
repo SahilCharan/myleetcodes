@@ -1,55 +1,45 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- * int val;
- * TreeNode left;
- * TreeNode right;
- * TreeNode() {}
- * TreeNode(int val) { this.val = val; }
- * TreeNode(int val, TreeNode left, TreeNode right) {
- * this.val = val;
- * this.left = left;
- * this.right = right;
- * }
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
  * }
  */
+import java.util.*;
+
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> ans =  new ArrayList<>();
-        if(root == null)
-        return ans;
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null)
+            return ans;
 
         Queue<TreeNode> q = new LinkedList<>();
         q.add(root);
-        q.add(null);
-        List<Integer> list =  new ArrayList<>();
-        while(!q.isEmpty())
-        {
-            
-            TreeNode curr = q.poll();
-            if(curr == null)
-            {
-                if(!list.isEmpty())
-                {ans.add(list);
-                list = new ArrayList<>();
-                }
-               
-                if(!q.isEmpty())
-                q.add(null);
 
-            }
-            else
-            {
+        while (!q.isEmpty()) {
+            List<Integer> list = new ArrayList<>();
+            int size = q.size(); // Number of nodes at the current level
+
+            for (int i = 0; i < size; i++) {
+                TreeNode curr = q.remove();
                 list.add(curr.val);
-                if(curr.left!=null)
-                {
+
+                if (curr.left != null) {
                     q.add(curr.left);
                 }
-                if(curr.right!=null)
-                {
-                q.add(curr.right);
+                if (curr.right != null) {
+                    q.add(curr.right);
                 }
             }
+            ans.add(list);
         }
         return ans;
     }
