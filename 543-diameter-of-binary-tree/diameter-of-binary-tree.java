@@ -1,46 +1,37 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
  * }
  */
 class Solution {
+    int diameter = 0;
+
     public int diameterOfBinaryTree(TreeNode root) {
-        // Create an array to hold the diameter of the tree
-        int diameter[] = new int[1];
+        height(root);
 
-        // Recursively calculate the height of the tree and update the diameter array
-        height(root,diameter);
+        return diameter;
 
-        // Return the diameter of the tree
-      return diameter[0];
     }
 
-    public int height(TreeNode root, int diameter[]){
-        
-        // Base case: if the root is null, the height is 0
-        if(root == null){
+    public int height(TreeNode root) {
+        if (root == null)
             return 0;
-        }
 
-        // Recursively calculate the height of the left and right subtrees
-        int left = height(root.left,diameter);
-        int right = height(root.right,diameter);
+        int lh = height(root.left);
+        int rh = height(root.right);
 
-        // Update the diameter array by taking the maximum diameter that passes through the current node
-        diameter[0] = Math.max(diameter[0],left + right);
+        diameter = Math.max(diameter, lh + rh);
+        return 1+Math.max(lh, rh);
 
-        // Return the maximum depth of the current node by adding 1 to the maximum depth of its deepest subtree
-        return Math.max(left,right)+1;
-        
     }
 }
