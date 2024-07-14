@@ -1,16 +1,16 @@
 class Solution {
     public int findDuplicate(int[] nums) {
-        // visited
-        int l = nums.length;
-        for(int n:nums)
+        
+        for(int n : nums)
         {
-            int idx = Math.abs(n);
+            int idx = Math.abs(n)-1;
             if(nums[idx]<0)
             {
-                return idx;
+                return Math.abs(n);
             }
-            nums[idx] = -nums[idx];
+            nums[idx]*=-1;
+
         }
-        return l;
+        return -1;
     }
 }
