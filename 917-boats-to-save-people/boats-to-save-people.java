@@ -1,20 +1,22 @@
-import java.util.Arrays;
-
 class Solution {
     public int numRescueBoats(int[] people, int limit) {
+        int right =people.length-1;
+        int left =0;
+        int boat =0;
         Arrays.sort(people);
-        int left = 0;
-        int right = people.length - 1;
-        int boat = 0;
-        
-        while (left <= right) {
-            if (people[left] + people[right] <= limit) {
+
+        while(left<=right)
+        {
+            if(people[left]+people[right]<=limit)
+            {
                 left++;
+               // boat++;
             }
             right--;
-            boat++; // Increment only when starting a new boat
+            boat++;
         }
-        
         return boat;
+
+
     }
 }
