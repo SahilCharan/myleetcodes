@@ -1,19 +1,24 @@
+import java.util.*;
+
 class Solution {
     public int earliestFullBloom(int[] plantTime, int[] growTime) {
-        int arr[][]=new int[growTime.length][2];
-        for(int i=0;i<growTime.length;i++){
-            arr[i][0]=growTime[i];
-            arr[i][1]=plantTime[i];
+        // Array of indices
+        Integer[] indices = new Integer[plantTime.length];
+        for (int i = 0; i < plantTime.length; i++) {
+            indices[i] = i;
         }
-        Arrays.sort(arr,(a, b) -> b[0]-a[0]);
-        int curr=0; //abb tk ka plant time lenge according to logic
-        int total=0; //iss me total days kitna hua
-        //grow time jiska jada usko phle plant taki jab tk 
-        // grow hoga tb tk koi aur bhi plant ho paye aur grow ho paye
-        for(int i=0;i<growTime.length;i++){
-            total=Math.max(total,curr+arr[i][0]+arr[i][1]);
-            curr=curr+arr[i][1];
+
+        // Sort indices based on growTime in descending order
+        Arrays.sort(indices, (a, b) -> growTime[b] - growTime[a]);
+
+        int maxBloomDays = 0;
+        int currPlantDay = 0;
+
+        for (int i : indices) {
+            currPlantDay += plantTime[i];
+            maxBloomDays = Math.max(maxBloomDays, currPlantDay + growTime[i]);
         }
-        return total;
+
+        return maxBloomDays;
     }
 }
