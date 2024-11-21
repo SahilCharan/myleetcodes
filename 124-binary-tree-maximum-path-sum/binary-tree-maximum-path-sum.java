@@ -14,27 +14,31 @@
  * }
  */
 class Solution {
-    int sum =Integer.MIN_VALUE;
+    int maxSum = Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
-        postorder(root);
-        return sum;
+        if(root==null)
+        return 0;
+        findsum(root);
+        return maxSum;
+        
     }
-    public int postorder(TreeNode root)
-    {
-        if(root == null)
+    int findsum(TreeNode root){
+        if(root==null)
         return 0;
 
-        int lsum = postorder(root.left);
-        // i dont want negative values.
+        int lsum = findsum(root.left);
         if(lsum<0)
         lsum =0;
-        int rsum = postorder(root.right);
-         if(rsum<0)
+
+        int rsum = findsum(root.right);
+        if(rsum<0)
         rsum =0;
 
-        
-        sum =  Math.max(sum,lsum+rsum+root.val);
+        maxSum = Math.max(lsum+rsum+root.val,maxSum);
 
         return root.val+Math.max(lsum,rsum);
+
+
     }
+
 }
