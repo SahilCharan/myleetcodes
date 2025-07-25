@@ -1,31 +1,17 @@
 class Solution {
     public int maxSum(int[] nums) {
-        boolean allNegative = true;
-        int maxValue = Integer.MIN_VALUE;
-        for(int n: nums){
-            if(n>=0){
-                allNegative = false;
+        Arrays.sort(nums);
+        int prev = nums[nums.length - 1];
+        int sum = prev;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            int n = nums[i];
+            if (n <= 0) {
+                return sum;
+            } else if (n != prev) {
+                sum = sum + n;
             }
-            if (n > maxValue) {
-                maxValue = n;
-            }
+            prev = n;
         }
-        if (allNegative)
-            return maxValue;
-
-        Set<Integer> unique = new HashSet<>();
-        for (int n : nums) {
-            unique.add(n);
-        }
-
-        // Sum all positive numbers from the set
-        int sum = 0;
-        for (int val : unique) {
-            if (val > 0) {
-                sum += val;
-            }
-        }
-
         return sum;
     }
 }
